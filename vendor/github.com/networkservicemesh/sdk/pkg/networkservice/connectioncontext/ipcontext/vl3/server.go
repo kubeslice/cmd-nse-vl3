@@ -86,10 +86,10 @@ func (v *vl3Server) Request(ctx context.Context, request *networkservice.Network
 				_, err := v.pool.allocateIPString(srcAddr)
 				if err != nil {
 					log.FromContext(ctx).Errorf("Failed to allocate prev IP: %s. Need to allocate new IPs", srcAddr)
-					v.pool.freeIPListAllocated(ipContext.SrcIpAddrs)
 					shouldAllocate = true
 					break
 				}
+				storeAddress(ctx, srcAddr)
 			}
 		}
 	}
