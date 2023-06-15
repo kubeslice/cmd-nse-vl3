@@ -50,10 +50,10 @@ import (
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/mechanisms/kernel"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/mechanisms/recvfd"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/mechanisms/sendfd"
-	"github.com/networkservicemesh/sdk/pkg/networkservice/connectioncontext/ipcontext/vl3"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/null"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/onidle"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/connectioncontext/dnscontext"
+	"github.com/networkservicemesh/sdk/pkg/networkservice/connectioncontext/ipcontext/vl3"
 	registryclient "github.com/networkservicemesh/sdk/pkg/registry/chains/client"
 	"github.com/networkservicemesh/sdk/pkg/registry/common/clientinfo"
 	registrysendfd "github.com/networkservicemesh/sdk/pkg/registry/common/sendfd"
@@ -314,4 +314,3 @@ func exitOnErr(ctx context.Context, cancel context.CancelFunc, errCh <-chan erro
 		cancel()
 	}(ctx, errCh)
 }
-
