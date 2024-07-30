@@ -48,7 +48,6 @@ import (
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/authorize"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/mechanisms"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/mechanisms/kernel"
-	"github.com/networkservicemesh/sdk/pkg/networkservice/common/mechanisms/recvfd"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/mechanisms/sendfd"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/null"
 	"github.com/networkservicemesh/sdk/pkg/networkservice/common/onidle"
@@ -153,7 +152,7 @@ func main() {
 	if opentelemetry.IsEnabled() {
 		collectorAddress := config.OpenTelemetryEndpoint
 		spanExporter := opentelemetry.InitSpanExporter(ctx, collectorAddress)
-		metricExporter := opentelemetry.InitMetricExporter(ctx, collectorAddress)
+                metricExporter := opentelemetry.InitOPTLMetricExporter(ctx, collectorAddress, 60*time.Second)
 		o := opentelemetry.Init(ctx, spanExporter, metricExporter, config.Name)
 		defer func() {
 			if err = o.Close(); err != nil {
@@ -190,7 +189,6 @@ func main() {
 		endpoint.WithAdditionalFunctionality(
 			onidle.NewServer(ctx, cancel, config.IdleTimeout),
 			vl3.NewServer(ctx, startListenPrefixes(config)),
-			recvfd.NewServer(),
 			mechanisms.NewServer(map[string]networkservice.NetworkServiceServer{
 				kernelmech.MECHANISM: kernel.NewServer(),
 				noop.MECHANISM:       null.NewServer(),
