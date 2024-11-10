@@ -13,7 +13,7 @@ COPY . .
 RUN go env -w GOPRIVATE=github.com/kubeslice && \
     CGO_ENABLED=0 GOOS=linux GOARCH=amd64 GO111MODULE=on go build -mod=vendor -a -o /bin/nse-vl3-kernel .
 
-FROM alpine:3.20.1 as runtime
+FROM alpine:3.20.2 as runtime
 COPY --from=build /bin/nse-vl3-kernel /bin/nse-vl3-kernel
 
 ENTRYPOINT ["/bin/nse-vl3-kernel"]
